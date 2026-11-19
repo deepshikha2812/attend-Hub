@@ -1,5 +1,6 @@
 # System Analysis
-## ROLE: SYSTEM ANALYST
+## ROLE: PRODUCT LEAD AND SYSTEM ANALYST
+
 
 This directory contains the system modelling and design documentation for the Attend-Hub project.
 
