@@ -1,0 +1,73 @@
+## Implementation Testing
+
+### 1. Overview
+Attendly was tested using a combination of **automated tests** (unit and UI tests) and **manual functional testing**. The goal was to verify that attendance calculations are accurate, all features work as expected, and user data persists correctly.
+
+### 2. Testing Tools
+| Tool | Purpose |
+|------|---------|
+| Vitest | Test runner |
+| React Testing Library | Rendering components and simulating user actions |
+| @testing-library/user-event | Simulating typing and clicking |
+| jsdom | Browser-like environment for tests |
+
+### 3. How to Run the Tests
+```bash
+# install dependencies
+npm install
+
+# run all tests
+npm test
+```
+
+### 4. Automated Test Cases
+
+| ID | Feature | Test Case | Expected Result |
+|----|---------|-----------|-----------------|
+| TC-01 | Calculation | 7 attended out of 10, target 75% | 70% shown, "need to attend 2 lectures" |
+| TC-02 | Calculation | 8 attended out of 10, target 60% | Safe, "can miss 3 lectures" |
+| TC-03 | Calculation | "Off" (cancelled) classes marked | Not counted in percentage |
+| TC-04 | Login | Wrong password entered | "Email or password is incorrect." shown |
+| TC-05 | Login | Empty email/password submitted | "Enter your email and password." shown |
+| TC-06 | Demo Login | Click "1-Click Demo Login" | Tracker opens, session saved in localStorage |
+
+### 5. Manual Test Checklist
+
+| Feature | What was tested | Result |
+|---------|-----------------|--------|
+| Register | New account creation, duplicate email blocked, empty name blocked | ☐ Pass |
+| Today tab | Today's classes shown, Att/Miss/Off/Clear buttons work | ☐ Pass |
+| Mark all | Marks every class of the day at once | ☐ Pass |
+| Timetable | Section A/B switch, add class, remove class | ☐ Pass |
+| Calendar | Date selection, dot colours (attended/missed/mixed/not marked), month navigation | ☐ Pass |
+| Subjects tab | Overall %, subject-wise %, edit counts, add subject, delete subject | ☐ Pass |
+| Alerts | Bell shows count and "need to attend N lectures" when below target | ☐ Pass |
+| Threshold | Changing minimum attendance (60-85%) updates all results | ☐ Pass |
+| Persistence | Data stays after page refresh and logout/login | ☐ Pass |
+| Multi-user | Each user's data is separate | ☐ Pass |
+| Reset | "Reset demo data" restores initial state | ☐ Pass |
+
+### 6. Sample Calculation (Verification)
+- Attended = 7, Conducted = 10, Target = 75%
+- Attendance = 7 / 10 = **70%** (below target)
+- Lectures needed = ceil((0.75 × 10 − 7) / (1 − 0.75)) = **2**
+- App output: "need to attend 2 lectures" ✅
+
+### 7. Test Results
+- Total automated tests: **X**
+- Passed: **X**
+- Failed: **0**
+
+*(Add a screenshot of the terminal showing the passing tests here)*
+
+### 8. Known Limitations
+- Passwords are stored in plain text in localStorage (no backend or hashing).
+- The "Active Students" count is based on seeded demo users, not live data.
+- Data is limited to one browser/device (no cloud sync).
+- No validation for overlapping classes in the timetable.
+
+### 9. Future Improvements
+- Add a backend with secure authentication (password hashing).
+- Add more automated tests (Today tab, Calendar, Subjects).
+- Add end-to-end tests using Cypress or Playwright.
+- Set up CI (GitHub Actions) to run tests on every push.
